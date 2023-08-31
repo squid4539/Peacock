@@ -67,11 +67,19 @@ namespace HitmanPatcher
                         tasks.Select(task => task.Result)
                             .Where(x => x != null));
 
+            Task<IEnumerable<Patch[]>> getSteamCheckPatches =
+                Task.Factory.ContinueWhenAll(new Task<Patch[]>[]
+                    {
+                        findSteamCheck(exeData),
+                    },
+                    tasks =>
+                        tasks.Select(task => task.Result)
+                            .Where(x => x != null));
 
             Task<IEnumerable<Patch[]>>[] alltasks =
             {
                 getCertpinPatches, getAuthheadPatches, getConfigdomainPatches,
-                getProtocolPatches, getDynresForceofflinePatches
+                getProtocolPatches, getDynresForceofflinePatches, getSteamCheckPatches
             };
             // ReSharper disable once CoVariantArrayConversion
             Task.WaitAll(alltasks);
@@ -93,6 +101,7 @@ namespace HitmanPatcher
             Note("ConfigDomain", getConfigdomainPatches.Result.First()[0]);
             Note("Protocol", getProtocolPatches.Result.First()[0]);
             Note("DynamicResources", getDynresForceofflinePatches.Result.First()[0]);
+            Note("SteamCheck", getSteamCheckPatches.Result.First()[0]);
 #endif
 
             result = new HitmanVersion()
@@ -102,7 +111,8 @@ namespace HitmanPatcher
                 configdomain = getConfigdomainPatches.Result.First(),
                 protocol = getProtocolPatches.Result.First(),
                 dynres_noforceoffline =
-                    getDynresForceofflinePatches.Result.First()
+                    getDynresForceofflinePatches.Result.First(),
+                steamcheck = getSteamCheckPatches.Result.First(),
             };
 
             return true;
@@ -393,6 +403,37 @@ namespace HitmanPatcher
                 {
                     new Patch(offsets.First(), "01", "00",
                         MemProtection.PAGE_EXECUTE_READWRITE)
+                };
+            });
+        }
+
+        #endregion
+
+        #region steamcheck
+
+        private static Task<Patch[]> findSteamCheck(byte[] data)
+        {
+            
+            return Task.Factory.ContinueWhenAll(new[]
+            {
+                Task.Factory.StartNew(() =>
+                    findPattern(data, 0x7, "4881ecc00000008b511083ea01 ? ? 83fa01 ? ? b0014881c4c0000000"))
+                    .ContinueWith(task =>
+                        task.Result.Select(addr =>
+                                addr + 13)
+                            .ToArray()),
+            }, tasks =>
+            {
+                IEnumerable<int> offsets =
+                    tasks.SelectMany(task => task.Result);
+                if (offsets.Count() != 1)
+                    return null;
+                return new[]
+                {
+                    new Patch(offsets.First(), "7466", "9090",
+                        MemProtection.PAGE_EXECUTE_READ),
+                    new Patch(offsets.First() + 5, "740B", "9090",
+                        MemProtection.PAGE_EXECUTE_READ)
                 };
             });
         }

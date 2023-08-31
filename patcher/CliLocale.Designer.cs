@@ -56,6 +56,12 @@ namespace HitmanPatcher {
                 return ResourceManager.GetString("DomainDescription", resourceCulture);
             }
         }
+
+        internal static string DontPatchSteamDescription {
+            get {
+                return ResourceManager.GetString("DontPatchSteamDescription", resourceCulture);
+            }
+        }
         
         internal static string UseHttpDescription {
             get {

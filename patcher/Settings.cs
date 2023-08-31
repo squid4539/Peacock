@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -23,6 +23,7 @@ namespace HitmanPatcher
                 AlwaysSendAuthHeader = true,
                 SetCustomConfigDomain = true,
                 DisableForceOfflineOnFailedDynamicResources = true,
+                DisableSteamCheck = true,
             };
             darkModeEnabled = false;
             startInTray = false;

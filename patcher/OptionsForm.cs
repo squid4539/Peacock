@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
@@ -62,7 +62,8 @@ namespace HitmanPatcher
                         DisableForceOfflineOnFailedDynamicResources = dynResources.Checked,
                         DisableCertPinning = true,
                         SetCustomConfigDomain = true,
-                        AlwaysSendAuthHeader = true
+                        AlwaysSendAuthHeader = true,
+                        DisableSteamCheck = true,
                     },
                     darkModeEnabled = darkModeBox.Checked,
                     startInTray = startInTray,

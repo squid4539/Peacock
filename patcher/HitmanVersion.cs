@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
@@ -34,7 +34,7 @@ namespace HitmanPatcher
 
     public class HitmanVersion
     {
-        public Patch[] certpin, authheader, configdomain, protocol, dynres_noforceoffline;
+        public Patch[] certpin, authheader, configdomain, protocol, dynres_noforceoffline, steamcheck;
 
         private static Dictionary<uint, string> timestampMap = new Dictionary<uint, string>();
 

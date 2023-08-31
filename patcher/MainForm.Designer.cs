@@ -289,7 +289,7 @@
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(423, 238);
             this.Name = "MainForm";
-            this.Text = "Peacock Patcher";
+            this.Text = "Peacock Patcher (Patched Steam check)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.logContextMenu.ResumeLayout(false);

@@ -54,4 +54,7 @@
     <data name="HelpHeader" xml:space="preserve">
         <value>Peacock Patcher CLI - Copyright (c) 2020-2023 grappigegovert &amp; The Peacock Project</value>
     </data>
+  <data name="DontPatchSteamDescription" xml:space="preserve">
+    <value>Patching steam check will remove the need for using a modified executable.</value>
+  </data>
 </root>
